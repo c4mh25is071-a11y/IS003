@@ -1,25 +1,119 @@
+
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html ng-app="libraryApp">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Angular project</title>
-     <script src="node_modules/angular/angular.js"></script>
-     <script src="app.js"></script>
+    <title>Library Management System</title>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        input {
+            padding: 10px;
+            width: 90%;
+            margin: 8px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .book {
+            background: #e6f0ff;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+        }
+
+        .delete {
+            background: red;
+        }
+    </style>
 </head>
-<body>
-    
-<div ng-controller="CollegeController">
 
-<h1>Welcome to {{collegeName}}</h1>
-<hr>
-<div ng-controller="StudentController">
-    <h2>{{name}}</h2>
-    <h3>{{department}}</h3>
-</div>
-<h3>{{department}}</h3>
+<body ng-controller="ParentController">
+
+<div class="container">
+
+    <h2>Library Management System</h2>
+
+    <!-- Parent Controller -->
+    <div>
+        <h3>Add Single Book</h3>
+
+        <input type="text"
+               ng-model="newBook"
+               placeholder="Enter book name">
+
+        <button ng-click="addBook()">
+            Add Book
+        </button>
     </div>
+
+    <hr>
+
+    <!-- Child Controller -->
+    <div ng-controller="ChildController">
+
+        <h3>Add Multiple Books</h3>
+
+        <input type="text"
+               ng-model="multipleBooks"
+               placeholder="Enter books separated by commas">
+
+        <button ng-click="addMultipleBooks()">
+            Add Multiple Books
+        </button>
+
+        <hr>
+
+        <h3>Book List</h3>
+
+        <div class="book" ng-repeat="book in books track by $index">
+
+            {{ $index + 1 }}. {{ book }}
+
+            <button class="delete"
+                    ng-click="deleteBook($index)">
+                Delete
+            </button>
+
+        </div>
+
+        <h3>Total Books: {{ books.length }}</h3>
+
+    </div>
+
+</div>
+
+<script>
+
+
+
+</script>
 
 </body>
 </html>

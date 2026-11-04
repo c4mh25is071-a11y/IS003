@@ -1,55 +1,25 @@
-var app = angular.module("libraryApp", []);
+var app = angular.module('myApp', []);
 
-// Parent Controller
-app.controller("ParentController", function($scope) {
+//parent controller
 
-    // Shared book list
-    $scope.books = [];
-
-    // Add single book
-    $scope.addBook = function() {
-
-        if ($scope.newBook &&
-            $scope.newBook.trim() !== "") {
-
-            $scope.books.push($scope.newBook.trim());
-
-            $scope.newBook = "";
-        }
-    };
-
+app.controller('CollegeController', function($scope) {
+    $scope.collegeName = "abc college";
 });
 
-// Child Controller
-app.controller("ChildController", function($scope) {
+//child controller
 
-    // Add multiple books
-    $scope.addMultipleBooks = function() {
+app.controller(
+    "StudentController", function($scope) {
+        $scope.name = "john";
+        $scope.department = "Computer Science";
+        $scope.semester = 3;
 
-        if ($scope.multipleBooks &&
-            $scope.multipleBooks.trim() !== "") {
-
-            var bookArray = $scope.multipleBooks.split(",");
-
-            angular.forEach(bookArray, function(book) {
-
-                book = book.trim();
-
-                if (book !== "") {
-                    $scope.books.push(book);
-                }
-
-            });
-
-            $scope.multipleBooks = "";
-        }
-    };
-
-    // Delete book
-    $scope.deleteBook = function(index) {
-
-        $scope.books.splice(index, 1);
-
-    };
-
-});
+        //aray
+        $scope.students =[
+            "AMULYA E",
+            "AKSHAY U SHET",
+            "AMRUTHA H S",
+            "AYUSH KUMAR K S",
+        ];
+    }
+);

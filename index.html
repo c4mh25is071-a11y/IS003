@@ -1,119 +1,41 @@
-
 <!DOCTYPE html>
-<html ng-app="libraryApp">
+<html lang="en" ng-app="myApp">
 <head>
-    <title>Library Management System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Angular project</title>
+     <script src="node_modules/angular/angular.js"></script>
+     <script src="app.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
-    <style>
-        body {
-            font-family: Arial;
-            background: #f2f2f2;
-            padding: 20px;
-        }
-
-        .container {
-            width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        h2 {
-            text-align: center;
-            color: darkblue;
-        }
-
-        input {
-            padding: 10px;
-            width: 90%;
-            margin: 8px 0;
-        }
-
-        button {
-            padding: 10px 15px;
-            background: blue;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin: 5px;
-        }
-
-        .book {
-            background: #e6f0ff;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
-        }
-
-        .delete {
-            background: red;
-        }
-    </style>
 </head>
+<body>
 
-<body ng-controller="ParentController">
-
-<div class="container">
-
-    <h2>Library Management System</h2>
-
-    <!-- Parent Controller -->
-    <div>
-        <h3>Add Single Book</h3>
-
-        <input type="text"
-               ng-model="newBook"
-               placeholder="Enter book name">
-
-        <button ng-click="addBook()">
-            Add Book
-        </button>
-    </div>
-
-    <hr>
-
-    <!-- Child Controller -->
-    <div ng-controller="ChildController">
-
-        <h3>Add Multiple Books</h3>
-
-        <input type="text"
-               ng-model="multipleBooks"
-               placeholder="Enter books separated by commas">
-
-        <button ng-click="addMultipleBooks()">
-            Add Multiple Books
-        </button>
-
+    
+    <div ng-controller="CollegeController">
+        <h2>welcome to {{collegeName}}</h2>
         <hr>
+        <div ng-controller="StudentController">
+            <h2>student registration</h2>
+            <label>student name:</label>
+            <input type="text" ng-model="name">
+            <br><br>
 
-        <h3>Book List</h3>
+            <label>department:</label>
+            <input type="text" ng-model="department">
+            <br><br>
+            <label>semester:</label>
+            <input type="text" ng-model="semester">
+            <hr>
 
-        <div class="book" ng-repeat="book in books track by $index">
+            <h3>student Details</h3>
+            <p>Name: {{name}}</p>
+            <p>Department: {{department}}</p>
+            <p>Semester: {{semester}}</p>
 
-            {{ $index + 1 }}. {{ book }}
-
-            <button class="delete"
-                    ng-click="deleteBook($index)">
-                Delete
-            </button>
-
+            <h2>Student List</h2>
+            <ul>
+                <li ng-repeat="student in students">{{student}}</li>
+            </ul>
         </div>
-
-        <h3>Total Books: {{ books.length }}</h3>
-
     </div>
-
-</div>
-
-<script>
-
-
-
-</script>
-
-</body>
 </html>

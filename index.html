@@ -1,224 +1,57 @@
 
 <!DOCTYPE html>
 <html lang="en" ng-app="studentApp">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
 
-    <title>Student Management System</title>
-
-    <!-- AngularJS Library -->
     <script src="node_modules/angular/angular.js"></script>
-
-    <!-- Application JavaScript -->
     <script src="app.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f4f8;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 750px;
-            margin: auto;
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #ccc;
-        }
-
-        h1, h2 {
-            text-align: center;
-            color: #243b64;
-        }
-
-        .college-name {
-            text-align: center;
-            color: #007bff;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 95%;
-            padding: 10px;
-            margin: 8px 0 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        button {
-            padding: 10px 18px;
-            margin: 8px 5px 8px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .details {
-            background-color: #eef5ff;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 5px;
-        }
-
-        li {
-            padding: 6px;
-        }
-
-        .pass {
-            color: green;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .fail {
-            color: red;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .section {
-            border-top: 1px solid #ddd;
-            padding-top: 15px;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
-<body>
+<body ng-controller="StudentController">
 
-    <!-- Parent Controller -->
-    <div class="container" ng-controller="CollegeController">
+    <h1>Student Management</h1>
 
-        <p class="college-name">{{ collegeName }}</p>
+    <form ng-submit="saveStudent()">
+        <input type="text" ng-model="student.name"
+               placeholder="Student Name" required>
 
-        <h1>Student Management System</h1>
+        <input type="text" ng-model="student.department"
+               placeholder="Department" required>
 
-        <!-- Child Controller -->
-        <div ng-controller="StudentController">
+        <button type="submit">
+            {{ student.id ? 'Update Student' : 'Add Student' }}
+        </button>
 
-            <div class="section">
+        <button type="button" ng-click="cancelEdit()"
+                ng-if="student.id">
+            Cancel
+        </button>
+    </form>
 
-                <h2>Student Entry Form</h2>
+    <hr>
 
-                <label>Student Name:</label>
-                <input type="text"
-                       ng-model="name"
-                       placeholder="Enter student name">
+    <h2>Student List</h2>
 
-                <label>Department:</label>
-                <input type="text"
-                       ng-model="department"
-                       placeholder="Enter department">
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+        </tr>
 
-                <label>Semester:</label>
-                <input type="number"
-                       ng-model="semester"
-                       placeholder="Enter semester">
-
-                <label>Examination Marks:</label>
-                <input type="number"
-                       ng-model="marks"
-                       placeholder="Enter marks"
-                       min="0"
-                       max="100">
-
-                <button ng-click="addStudent()">
-                    Add Student
-                </button>
-
-            </div>
-
-            <!-- Display Entered Details -->
-            <div class="section">
-
-                <h2>Entered Student Information</h2>
-
-                <p><b>Name:</b> {{ name || 'Not entered' }}</p>
-
-                <p><b>Department:</b> {{ department || 'Not entered' }}</p>
-
-                <p><b>Semester:</b> {{ semester || 'Not entered' }}</p>
-
-            </div>
-
-            <!-- Student List -->
-            <div class="section">
-
-                <h2>Student List</h2>
-
-                <ol>
-                    <li ng-repeat="student in students">
-                        {{ student }}
-                    </li>
-                </ol>
-
-            </div>
-
-            <!-- Show / Hide Details -->
-            <div class="section">
-
-                <h2>Student Details</h2>
-
-                <button ng-click="showDetails = !showDetails">
-                    {{ showDetails ? 'Hide Details' : 'Show Details' }}
-                </button>
-
-                <div class="details" ng-show="showDetails">
-
-                    <p><b>Name:</b> {{ name }}</p>
-
-                    <p><b>Department:</b> {{ department }}</p>
-
-                    <p><b>Semester:</b> {{ semester }}</p>
-
-                    <p><b>Marks:</b> {{ marks }}</p>
-
-                </div>
-
-            </div>
-
-            <!-- Examination Result -->
-            <div class="section">
-
-                <h2>Examination Result</h2>
-
-                <p ng-if="marks !== undefined && marks !== null && marks !== '' && marks >= 0 && marks <= 100"
-                   ng-class="{'pass': marks >= 40, 'fail': marks < 40}">
-
-                    {{ marks >= 40 ? 'Pass' : 'Needs Improvement' }}
-
-                </p>
-
-                <p ng-if="marks === undefined || marks === null || marks === ''">
-                    Please enter marks to see the result.
-                </p>
-
-                <p ng-if="marks < 0 || marks > 100">
-                    Please enter marks between 0 and 100.
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
+        <tr ng-repeat="s in students">
+            <td>{{ s.id }}</td>
+            <td>{{ s.name }}</td>
+            <td>{{ s.department }}</td>
+            <td>
+                <button ng-click="editStudent(s)">Edit</button>
+                <button ng-click="deleteStudent(s.id)">Delete</button>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
-
